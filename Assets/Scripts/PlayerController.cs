@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [Space]
     public float speed;
     public float jumpForce;
+    private bool isJumping;
     public AudioSource jumpAudioSource;
     public AudioSource hurtAudioSource;
     public AudioSource cherryAudioSource;
@@ -32,6 +33,14 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update()
+    {
+        if (Input.GetButton("Jump") && coll.IsTouchingLayers(ground))
+        {
+            isJumping = true;
+        }
+        Crouch();
+    }
+    void FixedUpdate()
     {
         if (!isHurt)
         {
@@ -58,13 +67,13 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(facedirection, 1, 1);
         }
         // 角色跳跃
-       if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers(ground))
+       if (isJumping)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce * Time.deltaTime);
             jumpAudioSource.Play();
             anim.SetBool("jumping", true);
-        }
-        Crouch();
+            isJumping = false;
+        } 
     }
 
     // 切换动画
@@ -82,6 +91,7 @@ public class PlayerController : MonoBehaviour
                 // rb的速度在y轴上小于0时，表示开始降落，转换动画
                 anim.SetBool("jumping", false);
                 anim.SetBool("falling", true);
+                isJumping = false;
             }
         }
         else if (isHurt)
@@ -149,10 +159,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Crouch"))
         {
             anim.SetBool("crouching", true);
+            disColl.enabled = false;
         }
         else if (Input.GetButtonUp("Crouch"))
         {
             anim.SetBool("crouching", false);
+            disColl.enabled = true;
         }
     }
 }

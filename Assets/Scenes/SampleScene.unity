@@ -458,6 +458,16 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7593498636581418613, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
   m_PrefabInstance: {fileID: 510488218752833345}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &347108481 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 7403826328410310113, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
+  m_PrefabInstance: {fileID: 510488218752833345}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &347108485 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 1337562667228932656, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
+  m_PrefabInstance: {fileID: 510488218752833345}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &420446844
 GameObject:
   m_ObjectHideFlags: 0
@@ -3744,7 +3754,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!60 &1610039334
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -4244,10 +4254,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3410416158281157113, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
+      propertyPath: m_Volume
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3457960511105918891, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
+      propertyPath: m_Volume
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6035101920638981114, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
+      propertyPath: m_Volume
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6139031857344411828, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
+      propertyPath: m_Volume
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6938437853204483122, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
+      propertyPath: disColl
+      value: 
+      objectReference: {fileID: 347108485}
     - target: {fileID: 6938437853204483122, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
       propertyPath: cherryNum
       value: 
       objectReference: {fileID: 1378008895}
+    - target: {fileID: 6938437853204483122, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
+      propertyPath: cherryAudioSource
+      value: 
+      objectReference: {fileID: 347108481}
+    - target: {fileID: 6938437853204483122, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
+      propertyPath: runningAudioSource
+      value: 
+      objectReference: {fileID: 347108481}
+    - target: {fileID: 7403826328410310113, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
+      propertyPath: m_Volume
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7593498636581418613, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.33
