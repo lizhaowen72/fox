@@ -140,7 +140,8 @@ public class PlayerController : MonoBehaviour
     // 切换动画
     void SwitchAnim()
     {
-        anim.SetBool("idle", false);
+        // 所有跟idle相关的动态都注释掉，原因是fox默认就是idle状态，记得还要删除动画中idle对应的条件
+        //anim.SetBool("idle", false);
         if (rb.velocity.y < 0.1f && !coll.IsTouchingLayers(ground))
         {
             anim.SetBool("falling", true);
@@ -162,7 +163,7 @@ public class PlayerController : MonoBehaviour
             if (Mathf.Abs(rb.velocity.x) < 0.1)
             {
                 anim.SetBool("hurt", false);
-                anim.SetBool("idle", true);
+                //anim.SetBool("idle", true);
                 isHurt = false;
             }
         }
@@ -170,7 +171,7 @@ public class PlayerController : MonoBehaviour
         {
             // 如果碰撞到地面，转换动画
             anim.SetBool("falling", false);
-            anim.SetBool("idle", true);
+            //anim.SetBool("idle", true);
         }
 
         //当从空中落地时重置脚步声计时
