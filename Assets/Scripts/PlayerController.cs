@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour
     public LayerMask ground;
     public int Cherry;
     public Text cherryNum;
+
+    public int Gem;
+    public Text gemNum;
     private bool isHurt;
     private bool isPlayingRunningSound = false;
     private bool wasGrounded = true;
@@ -123,7 +126,7 @@ public class PlayerController : MonoBehaviour
         jumpAudioSource.PlayOneShot(jumpAudioSource.clip);
     }
 
-    void PlayCollectionCherrySound()
+    void PlayCollectionSound()
     {
         // 使用PlayOneShot避免中断其他音效
         cherryAudioSource.PlayOneShot(cherryAudioSource.clip);
@@ -185,8 +188,17 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.gameObject);
             Cherry += 1;
-            PlayCollectionCherrySound();
+            PlayCollectionSound();
             cherryNum.text = Cherry.ToString();
+        }
+
+        //收集宝石
+        if (collision.tag == "Gem")
+        {
+            Destroy(collision.gameObject);
+            Gem += 1;
+            PlayCollectionSound();
+            gemNum.text = Gem.ToString();
         }
         if (collision.tag == "Deadline")
         {
