@@ -1,0 +1,42 @@
+# ================ #
+# Unity 特定文件  #
+# ================ #
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+sysinfo.txt
+*.apk
+*.aab
+*.unitypackage
+# 忽略 Assets 目录下的 TextMesh Pro 文件夹
+Assets/TextMesh*Pro/
+# 忽略 Assets 目录下的 微信小游戏转换 文件夹
+Assets/WebGLTemplates/
+Assets/WX-WASM-SDK-V2/
+
+TextToolDatas/
+
+# ================ #
+# IDE 与编辑器    #
+# ================ #
+# VSCode 配置 (建议个人配置忽略，团队共享配置可考虑提交)
+.vscode/
+# Visual Studio 相关
+.vs/
+*.csproj
+*.sln
+*.suo
+*.userprefs
+
+# ================ #
+# 系统与日志文件  #
+# ================ #
+# macOS
+.DS_Store
+# 日志文件
+*.log
