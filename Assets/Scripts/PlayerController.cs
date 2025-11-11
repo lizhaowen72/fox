@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     private Animator anim;
     public Collider2D coll;
+    public Collider2D disColl;
     [Space]
     public float speed;
     public float jumpForce;
@@ -16,8 +17,7 @@ public class PlayerController : MonoBehaviour
     public AudioSource hurtAudioSource;
     public AudioSource cherryAudioSource;
     public AudioSource runningAudioSource;
-    private bool isJumpPressed;
-   
+
     [Space]
     public LayerMask ground;
     public int Cherry;
@@ -32,16 +32,6 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update()
-    {
-        // 在Update中检测输入，并设置标志
-        if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers(ground))
-        {
-            isJumpPressed = true;
-        }
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
     {
         if (!isHurt)
         {
@@ -58,7 +48,7 @@ public class PlayerController : MonoBehaviour
         // 角色移动
         if (horizontalMove != 0)
         {
-            rb.velocity = new Vector2(horizontalMove * speed * Time.fixedDeltaTime, rb.velocity.y);
+            rb.velocity = new Vector2(horizontalMove * speed * Time.deltaTime, rb.velocity.y);
             runningAudioSource.Play();
             anim.SetFloat("running", Mathf.Abs(facedirection));
         }
@@ -68,13 +58,13 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(facedirection, 1, 1);
         }
         // 角色跳跃
-        if (isJumpPressed)
+       if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers(ground))
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce * Time.fixedDeltaTime);
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce * Time.deltaTime);
             jumpAudioSource.Play();
             anim.SetBool("jumping", true);
-            isJumpPressed = false;
         }
+        Crouch();
     }
 
     // 切换动画
@@ -134,9 +124,8 @@ public class PlayerController : MonoBehaviour
             if (anim.GetBool("falling"))
             {
                 enemy.JumpOn();
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce * Time.fixedDeltaTime);
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce * Time.deltaTime);
                 anim.SetBool("jumping", true);
-                isJumpPressed = false;
             }
             else if (transform.position.x < collision.gameObject.transform.position.x)
             {
@@ -152,6 +141,18 @@ public class PlayerController : MonoBehaviour
                 hurtAudioSource.Play();
                 isHurt = true;
             }
+        }
+    }
+
+    void Crouch()
+    {
+        if (Input.GetButtonDown("Crouch"))
+        {
+            anim.SetBool("crouching", true);
+        }
+        else if (Input.GetButtonUp("Crouch"))
+        {
+            anim.SetBool("crouching", false);
         }
     }
 }
