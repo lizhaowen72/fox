@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(horizontalMove * speed * Time.deltaTime, rb.velocity.y);
             // 优化跑步音效
-            if (isGrounded && Time.time - lastFootstepTime >footstepInterval)
+            if (isGrounded && Time.time - lastFootstepTime > footstepInterval)
             {
                 PlayingRunningSound();
                 lastFootstepTime = Time.time;
@@ -116,13 +116,24 @@ public class PlayerController : MonoBehaviour
             isPlayingRunningSound = true;
         }
     }
-    
+
     void PlayJumpSound()
     {
         // 使用PlayOneShot避免中断其他音效
         jumpAudioSource.PlayOneShot(jumpAudioSource.clip);
     }
 
+    void PlayCollectionCherrySound()
+    {
+        // 使用PlayOneShot避免中断其他音效
+        cherryAudioSource.PlayOneShot(cherryAudioSource.clip);
+    }
+
+    void PlayHurtSound()
+    {
+        // 使用PlayOneShot避免中断其他音效
+        hurtAudioSource.PlayOneShot(hurtAudioSource.clip);
+    }
     // 切换动画
     void SwitchAnim()
     {
@@ -174,7 +185,7 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.gameObject);
             Cherry += 1;
-            cherryAudioSource.Play();
+            PlayCollectionCherrySound();
             cherryNum.text = Cherry.ToString();
         }
         if (collision.tag == "Deadline")
@@ -201,14 +212,14 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("left");
                 rb.velocity = new Vector2(-10, rb.velocity.y);
-                hurtAudioSource.Play();
+                PlayHurtSound();
                 isHurt = true;
             }
             else if (transform.position.x > collision.gameObject.transform.position.x)
             {
                 Debug.Log("right");
                 rb.velocity = new Vector2(10, rb.velocity.y);
-                hurtAudioSource.Play();
+                PlayHurtSound();
                 isHurt = true;
             }
         }
