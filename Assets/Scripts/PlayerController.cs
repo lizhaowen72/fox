@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float jumpForce;
     private bool isJumping;
+
     public AudioSource jumpAudioSource;
     public AudioSource hurtAudioSource;
     public AudioSource cherryAudioSource;
@@ -26,6 +28,10 @@ public class PlayerController : MonoBehaviour
     public int Cherry;
     public Text cherryNum;
     private bool isHurt;
+    private bool isPlayingRunningSound = false;
+    private bool wasGrounded = true;
+    private float lastFootstepTime = 0f;
+    private float footstepInterval = 0.3f;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +42,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
         if (Input.GetButton("Jump") && coll.IsTouchingLayers(ground))
         {
             isJumping = true;
@@ -56,12 +63,28 @@ public class PlayerController : MonoBehaviour
         float horizontalMove;
         horizontalMove = Input.GetAxis("Horizontal");
         float facedirection = Input.GetAxisRaw("Horizontal");
+        bool isGrounded = coll.IsTouchingLayers(ground);
         // 角色移动
         if (horizontalMove != 0)
         {
             rb.velocity = new Vector2(horizontalMove * speed * Time.deltaTime, rb.velocity.y);
-            runningAudioSource.Play();
+            // 优化跑步音效
+            if (isGrounded && Time.time - lastFootstepTime >footstepInterval)
+            {
+                PlayingRunningSound();
+                lastFootstepTime = Time.time;
+            }
             anim.SetFloat("running", Mathf.Abs(facedirection));
+        }
+        else
+        {
+            // 停止移动时停止播放音效
+            if (isPlayingRunningSound)
+            {
+                runningAudioSource.Stop();
+                isPlayingRunningSound = false;
+            }
+            anim.SetFloat("running", 0);
         }
         // 角色转向
         if (facedirection != 0)
@@ -72,10 +95,32 @@ public class PlayerController : MonoBehaviour
         if (isJumping)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce * Time.deltaTime);
-            jumpAudioSource.Play();
+            PlayJumpSound();
             anim.SetBool("jumping", true);
             isJumping = false;
+
+            // 跳跃时停止跑步音乐
+            if (isPlayingRunningSound)
+            {
+                runningAudioSource.Stop();
+                isPlayingRunningSound = false;
+            }
         }
+    }
+
+    private void PlayingRunningSound()
+    {
+        if (!runningAudioSource.isPlaying)
+        {
+            runningAudioSource.Play();
+            isPlayingRunningSound = true;
+        }
+    }
+    
+    void PlayJumpSound()
+    {
+        // 使用PlayOneShot避免中断其他音效
+        jumpAudioSource.PlayOneShot(jumpAudioSource.clip);
     }
 
     // 切换动画
@@ -112,6 +157,12 @@ public class PlayerController : MonoBehaviour
             // 如果碰撞到地面，转换动画
             anim.SetBool("falling", false);
             anim.SetBool("idle", true);
+        }
+
+        //当从空中落地时重置脚步声计时
+        if (!wasGrounded && coll.IsTouchingLayers(ground))
+        {
+            lastFootstepTime = Time.time;// 落地后立即可以播放脚步声
         }
     }
 
