@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     public Collider2D coll;
     public Collider2D disColl;
+    public Transform cellingCheck;
     [Space]
     public float speed;
     public float jumpForce;
@@ -67,13 +68,13 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(facedirection, 1, 1);
         }
         // 角色跳跃
-       if (isJumping)
+        if (isJumping)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce * Time.deltaTime);
             jumpAudioSource.Play();
             anim.SetBool("jumping", true);
             isJumping = false;
-        } 
+        }
     }
 
     // 切换动画
@@ -156,15 +157,20 @@ public class PlayerController : MonoBehaviour
 
     void Crouch()
     {
-        if (Input.GetButtonDown("Crouch"))
+        // 当fox头上没有障碍物的时候，才执行下面的代码
+        if (!Physics2D.OverlapCircle(cellingCheck.position, 0.2f, ground))
         {
-            anim.SetBool("crouching", true);
-            disColl.enabled = false;
+            if (Input.GetButtonDown("Crouch"))
+            {
+                anim.SetBool("crouching", true);
+                disColl.enabled = false;
+            }
+            else if (Input.GetButtonUp("Crouch"))
+            {
+                anim.SetBool("crouching", false);
+                disColl.enabled = true;
+            }
         }
-        else if (Input.GetButtonUp("Crouch"))
-        {
-            anim.SetBool("crouching", false);
-            disColl.enabled = true;
-        }
+
     }
 }
