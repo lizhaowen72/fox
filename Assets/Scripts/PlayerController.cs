@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -114,15 +115,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // 收集物品
+    // 碰撞触发器 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //收集樱桃
         if (collision.tag == "Collection")
         {
             Destroy(collision.gameObject);
             Cherry += 1;
             cherryAudioSource.Play();
             cherryNum.text = Cherry.ToString();
+        }
+        if (collision.tag == "Deadline")
+        {
+            // 将所有的音频都禁用
+            GetComponent<AudioSource>().enabled = false;
+            Invoke("Restart", 2f);
         }
     }
 
@@ -160,17 +168,21 @@ public class PlayerController : MonoBehaviour
         // 当fox头上没有障碍物的时候，才执行下面的代码
         if (!Physics2D.OverlapCircle(cellingCheck.position, 0.2f, ground))
         {
-            if (Input.GetButtonDown("Crouch"))
+            if (Input.GetButton("Crouch"))
             {
                 anim.SetBool("crouching", true);
                 disColl.enabled = false;
             }
-            else if (Input.GetButtonUp("Crouch"))
+            else
             {
                 anim.SetBool("crouching", false);
                 disColl.enabled = true;
             }
         }
+    }
 
+    void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

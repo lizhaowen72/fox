@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Collection
   - Enemy
+  - Deadline
   layers:
   - Default
   - TransparentFX
