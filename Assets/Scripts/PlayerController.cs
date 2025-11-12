@@ -18,11 +18,6 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     private bool isJumping;
 
-    public AudioSource jumpAudioSource;
-    public AudioSource hurtAudioSource;
-    public AudioSource cherryAudioSource;
-    public AudioSource runningAudioSource;
-
     [Space]
     public LayerMask ground;
     public int Cherry;
@@ -75,19 +70,13 @@ public class PlayerController : MonoBehaviour
             // 优化跑步音效
             if (isGrounded && Time.time - lastFootstepTime > footstepInterval)
             {
-                PlayingRunningSound();
+                SoundManager.Instance.PlayRunningSound();
                 lastFootstepTime = Time.time;
             }
             anim.SetFloat("running", Mathf.Abs(facedirection));
         }
         else
         {
-            // 停止移动时停止播放音效
-            if (isPlayingRunningSound)
-            {
-                runningAudioSource.Stop();
-                isPlayingRunningSound = false;
-            }
             anim.SetFloat("running", 0);
         }
         // 角色转向
@@ -99,45 +88,13 @@ public class PlayerController : MonoBehaviour
         if (isJumping)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce * Time.deltaTime);
-            PlayJumpSound();
+            SoundManager.Instance.PlayJumpSound();
             anim.SetBool("jumping", true);
             isJumping = false;
-
-            // 跳跃时停止跑步音乐
-            if (isPlayingRunningSound)
-            {
-                runningAudioSource.Stop();
-                isPlayingRunningSound = false;
-            }
         }
     }
 
-    private void PlayingRunningSound()
-    {
-        if (!runningAudioSource.isPlaying)
-        {
-            runningAudioSource.Play();
-            isPlayingRunningSound = true;
-        }
-    }
 
-    void PlayJumpSound()
-    {
-        // 使用PlayOneShot避免中断其他音效
-        jumpAudioSource.PlayOneShot(jumpAudioSource.clip);
-    }
-
-    void PlayCollectionSound()
-    {
-        // 使用PlayOneShot避免中断其他音效
-        cherryAudioSource.PlayOneShot(cherryAudioSource.clip);
-    }
-
-    void PlayHurtSound()
-    {
-        // 使用PlayOneShot避免中断其他音效
-        hurtAudioSource.PlayOneShot(hurtAudioSource.clip);
-    }
     // 切换动画
     void SwitchAnim()
     {
@@ -189,7 +146,7 @@ public class PlayerController : MonoBehaviour
         if (collision.tag == "Cherry")
         {
             collision.GetComponent<Animator>().Play("GetCherry");
-            PlayCollectionSound();
+            SoundManager.Instance.PlayCollectSound();
         }
 
         //收集宝石
@@ -197,7 +154,7 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(collision.gameObject);
             Gem += 1;
-            PlayCollectionSound();
+            SoundManager.Instance.PlayCollectSound();
             gemNum.text = Gem.ToString();
         }
         if (collision.tag == "Deadline")
@@ -224,14 +181,14 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("left");
                 rb.velocity = new Vector2(-10, rb.velocity.y);
-                PlayHurtSound();
+                SoundManager.Instance.PlayHurtSound();
                 isHurt = true;
             }
             else if (transform.position.x > collision.gameObject.transform.position.x)
             {
                 Debug.Log("right");
                 rb.velocity = new Vector2(10, rb.velocity.y);
-                PlayHurtSound();
+                SoundManager.Instance.PlayHurtSound();
                 isHurt = true;
             }
         }
