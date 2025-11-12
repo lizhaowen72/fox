@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
             isJumping = true;
         }
         Crouch();
+        cherryNum.text = Cherry.ToString();
     }
     void FixedUpdate()
     {
@@ -185,12 +186,10 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //收集樱桃
-        if (collision.tag == "Collection")
+        if (collision.tag == "Cherry")
         {
-            Destroy(collision.gameObject);
-            Cherry += 1;
+            collision.GetComponent<Animator>().Play("GetCherry");
             PlayCollectionSound();
-            cherryNum.text = Cherry.ToString();
         }
 
         //收集宝石
@@ -259,5 +258,10 @@ public class PlayerController : MonoBehaviour
     void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void CherryCount()
+    {
+        Cherry+=1;
     }
 }
