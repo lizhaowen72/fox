@@ -749,6 +749,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 1002931832}
+  audioMixer: {fileID: 24100000, guid: f8d85f576de674d589ed37f28188bf1d, type: 2}
 --- !u!4 &333577596 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2611753712426862414, guid: 595034204522548169322b4be9e7cfdb, type: 3}
@@ -992,7 +993,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.7152, y: -0.15006828, z: -10}
+  m_LocalPosition: {x: -23.548288, y: -0.07390928, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1128,13 +1129,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 70364295}
   m_HandleRect: {fileID: 1042922759}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 0
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 319506541}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: SetVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &576461735
 GameObject:
   m_ObjectHideFlags: 0
@@ -5851,18 +5864,34 @@ PrefabInstance:
       propertyPath: m_Volume
       value: 0.154
       objectReference: {fileID: 0}
+    - target: {fileID: 3410416158281157113, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: f8d85f576de674d589ed37f28188bf1d, type: 2}
     - target: {fileID: 3457960511105918891, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
       propertyPath: m_Volume
       value: 0.136
       objectReference: {fileID: 0}
+    - target: {fileID: 3457960511105918891, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: f8d85f576de674d589ed37f28188bf1d, type: 2}
     - target: {fileID: 6035101920638981114, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
       propertyPath: m_Volume
       value: 0.136
       objectReference: {fileID: 0}
+    - target: {fileID: 6035101920638981114, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: f8d85f576de674d589ed37f28188bf1d, type: 2}
     - target: {fileID: 6139031857344411828, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
       propertyPath: m_Volume
       value: 0.167
       objectReference: {fileID: 0}
+    - target: {fileID: 6139031857344411828, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: f8d85f576de674d589ed37f28188bf1d, type: 2}
     - target: {fileID: 6938437853204483122, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
       propertyPath: disColl
       value: 
@@ -5887,6 +5916,10 @@ PrefabInstance:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 6b08ccefe2c8c5e4fb69ec0c3d5d92df, type: 3}
+    - target: {fileID: 7403826328410310113, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: f8d85f576de674d589ed37f28188bf1d, type: 2}
     - target: {fileID: 7593498636581418613, guid: 22617498ae29c4db887cb08ade8e91af, type: 3}
       propertyPath: m_LocalPosition.x
       value: -31.15
