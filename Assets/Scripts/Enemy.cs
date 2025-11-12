@@ -20,8 +20,9 @@ public class Enemy : MonoBehaviour
     }
     
     void Death()
-    {
-       
+    {   
+        // 防止在碰撞的过程中遇到二次碰撞
+        GetComponent<Collider2D>().enabled = false;
         Destroy(gameObject);
     }
 
